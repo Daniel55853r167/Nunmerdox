@@ -32,7 +32,7 @@
 ### En Kali Linux
 
 ```bash
-git clone https://github.com/tu-usuario/Nunmerdox.git
+git clone https://github.com/Daniel55853r167/Nunmerdox.git
 cd Nunmerdox
 python3 -m pip install -r requirements.txt
 python3 -m pip install -e .
@@ -43,7 +43,7 @@ python3 -m pip install -e .
 ```bash
 apt update && apt upgrade -y
 apt install python3 python3-pip git
-git clone https://github.com/tu-usuario/Nunmerdox.git
+git clone https://github.com/Daniel55853r167/Nunmerdox.git
 cd Nunmerdox
 pip install -r requirements.txt
 pip install -e .
@@ -227,6 +227,8 @@ Este software se proporciona "tal cual" para propósitos de seguridad. El usuari
 
 ## Contacto y Reportes
 
-Para bugs, sugerencias o reportes de seguridad, abre un issue en GitHub.
+Para bugs, sugerencias o reportes de seguridad, abre un issue en [GitHub](https://github.com/Daniel55853r167/Nunmerdox/issues).
+
+**Autor:** [@Daniel55853r167](https://github.com/Daniel55853r167)
 
 **Recuerda: con gran poder viene gran responsabilidad. Úsalo ética y legalmente.**
