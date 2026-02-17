@@ -35,30 +35,67 @@
 git clone https://github.com/Daniel55853r167/Nunmerdox.git
 cd Nunmerdox
 python3 -m pip install -r requirements.txt
-python3 -m pip install -e .
+python3 nunmerdox
 ```
 
 ### En Termux (Android)
 
 ```bash
 apt update && apt upgrade -y
-apt install python3 python3-pip git
+apt install python3 git
+python3 -m pip install --upgrade pip
 git clone https://github.com/Daniel55853r167/Nunmerdox.git
 cd Nunmerdox
-pip install -r requirements.txt
-python -m nunmerdox scan
+python3 -m pip install -r requirements.txt
+python3 nunmerdox
 ```
 
-**Nota:** Termux requiere Python3 y pip. Si `python3-pip` no está disponible:
+**Nota:** Termux requiere Python3 y pip. Si hay problemas:
 ```bash
 apt install python3
 python3 -m pip install -r requirements.txt
-python3 -m nunmerdox scan
+python3 nunmerdox
 ```
 
 ---
 
 ## Uso
+
+### ⚡ Más Simple - Menú Principal (RECOMENDADO)
+
+Solo ejecuta y selecciona:
+
+```bash
+python3 nunmerdox
+```
+
+**Se abre el menú:**
+```
+════════════════════════════════════════════════════════════
+NUNMERDOX - OSINT Scanner de Números Telefónicos
+════════════════════════════════════════════════════════════
+
+============================================================
+Selecciona modo
+============================================================
+  1. OSINT Completo (con opciones)
+  2. OSINT Rápido (solo número)
+
+Selecciona opción: 
+```
+
+**Opción 1:** Entra en modo interactivo con menús para:
+- Agregar múltiples números
+- Configurar OSINT (máx resultados, delays)
+- Elegir formato (JSON, TXT, CSV)
+
+**Opción 2:** Directo - pide número y lanza OSINT
+```
+Introduce el número (+34123456789 o 123456789): +34615234567
+Iniciando búsqueda OSINT...
+```
+
+---
 
 ### ⚡ Modo Rápido (Por defecto)
 
@@ -136,13 +173,19 @@ python -m nunmerdox scan \
 
 ## 🎨 Características
 
-### Modo Rápido
-✅ **Sin configuración** - Introduce número y listo
-✅ **OSINT activado por defecto** - Búsquedas automáticas
+### Menú Principal
+✅ **Sin configuración** - Ejecuta `python3 nunmerdox` y elige
+✅ **2 opciones claras** - OSINT Completo o OSINT Rápido
+✅ **Interfaz limpia** - Menú numerado, fácil de usar
+✅ **Ideal para** - Todos (nuevos y avanzados)
+
+### OSINT Rápido
+✅ **Configuración 0** - Solo introduce número
+✅ **OSINT activado** - Búsquedas automáticas
 ✅ **Salida en consola** - Resultados instantáneos
 ✅ **Ideal para** - Uso rápido sin opciones
 
-### Modo Interactivo Avanzado
+### OSINT Completo (Modo Interactivo)
 ✅ **Menús numerados** - Solo escribe el número de la opción
 ✅ **Colores** - Interfaz visual clara
 ✅ **Validación** - No permite valores inválidos
@@ -154,15 +197,12 @@ python -m nunmerdox scan \
 
 ## Opciones CLI
 
-| Opción | Descripción | Default |
-|--------|-------------|---------|
-| (sin args) | Modo rápido - solo introduce número | - |
-| `--interactive`, `-i` | Modo avanzado con menús completos | - |
-| `--agree-ethics` | Obligatorio para CLI clásico | - |
-| `--osint` | Activar búsquedas OSINT (CLI) | False |
-| `--osint-max N` | Máx resultados por query | 5 |
-| `--osint-delay S` | Delay entre queries (seg) | 1.0 |
-| `-o, --output FILE` | Archivo de salida | Consola |
+| Comando | Modo |
+|---------|------|
+| `python3 nunmerdox` | 🟢 **Menú Principal** (RECOMENDADO) |
+| `python -m nunmerdox scan` | ⚡ **Modo Rápido** (solo número) |
+| `python -m nunmerdox scan --interactive` | 🎯 **Avanzado** (menús completos) |
+| `python -m nunmerdox scan "+34..." --agree-ethics --osint` | 🔧 **CLI clásico** |
 
 ---
 
@@ -175,10 +215,18 @@ pip install -r requirements.txt
 
 **2. Ejecuta:**
 ```bash
-python -m nunmerdox scan
+python3 nunmerdox
 ```
 
-**3. Introduce tu número:**
+**3. Selecciona opción:**
+```
+1. OSINT Completo (con opciones)
+2. OSINT Rápido (solo número)
+
+Selecciona opción: 2
+```
+
+**4. Introduce tu número:**
 ```
 Introduce el número (+34123456789 o 123456789): +34615234567
 ```
