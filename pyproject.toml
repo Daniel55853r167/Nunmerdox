@@ -13,7 +13,8 @@ authors = [
 ]
 dependencies = [
     "phonenumbers>=8.13.0",
-    "duckduckgo_search>=3.9.0",
+    "requests>=2.28.0",
+    "beautifulsoup4>=4.11.0",
     "typer[all]>=0.9.0",
 ]
 

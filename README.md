@@ -46,7 +46,14 @@ apt install python3 python3-pip git
 git clone https://github.com/Daniel55853r167/Nunmerdox.git
 cd Nunmerdox
 pip install -r requirements.txt
-pip install -e .
+python -m nunmerdox scan
+```
+
+**Nota:** Termux requiere Python3 y pip. Si `python3-pip` no está disponible:
+```bash
+apt install python3
+python3 -m pip install -r requirements.txt
+python3 -m nunmerdox scan
 ```
 
 ---
@@ -243,8 +250,11 @@ Nunmerdox/
 ## Dependencias
 
 - **phonenumbers** ≥8.13.0 - Parsing y validación de números
-- **duckduckgo_search** ≥3.9.0 - Búsquedas OSINT
+- **requests** ≥2.28.0 - Búsquedas HTTP en DuckDuckGo
+- **beautifulsoup4** ≥4.11.0 - Parser de HTML
 - **typer** ≥0.9.0 - CLI moderna
+
+**✅ Compatible con Termux** - Sin dependencias de compilación Rust
 
 ---
 

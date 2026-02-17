@@ -12,9 +12,17 @@ ADVERTENCIA LEGAL:
 from typing import List, Dict, Any, Optional
 import time
 import logging
-from duckduckgo_search import ddg
+import requests
+from bs4 import BeautifulSoup
+from urllib.parse import quote
 
 logger = logging.getLogger(__name__)
+
+# User-Agent para evitar bloqueos
+USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+)
 
 
 def build_osint_queries(e164: str, intl: Optional[str] = None) -> List[str]:
@@ -47,7 +55,6 @@ def build_osint_queries(e164: str, intl: Optional[str] = None) -> List[str]:
         f'{e164} site:pastebin.com',
         f'{e164} site:reddit.com',
         f'{e164} site:linkedin.com',
-        f'{e164} site:disqus.com',
     ]
     
     # Dedupe preservando orden
@@ -59,6 +66,69 @@ def build_osint_queries(e164: str, intl: Optional[str] = None) -> List[str]:
             out.append(item)
     
     return out
+
+
+def search_duckduckgo(query: str, max_results: int = 5) -> List[Dict[str, Any]]:
+    """
+    Busca en DuckDuckGo usando una simple solicitud HTTP.
+    
+    Args:
+        query: Término de búsqueda
+        max_results: Máximo de resultados a retornar
+    
+    Returns:
+        Lista de resultados: {title, href, body}
+    """
+    results = []
+    
+    try:
+        # URL de búsqueda de DuckDuckGo HTML
+        url = "https://html.duckduckgo.com/"
+        params = {"q": query}
+        
+        headers = {"User-Agent": USER_AGENT}
+        
+        response = requests.get(url, params=params, headers=headers, timeout=10)
+        response.raise_for_status()
+        
+        # Parse HTML
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        # Buscar resultados
+        for result in soup.find_all('div', class_='result'):
+            if len(results) >= max_results:
+                break
+            
+            try:
+                # Título y URL
+                link = result.find('a', class_='result__url')
+                if not link:
+                    continue
+                
+                href = link.get('href', '')
+                title_elem = result.find('a', class_='result__title')
+                title = title_elem.get_text(strip=True) if title_elem else ''
+                
+                # Snippet
+                snippet_elem = result.find('a', class_='result__snippet')
+                body = snippet_elem.get_text(strip=True) if snippet_elem else ''
+                
+                if href and title:
+                    results.append({
+                        "title": title,
+                        "href": href,
+                        "body": body
+                    })
+            except Exception as e:
+                logger.debug(f"Error parsing resultado: {e}")
+                continue
+        
+    except requests.exceptions.RequestException as e:
+        logger.warning(f"Error en búsqueda DuckDuckGo para '{query}': {e}")
+    except Exception as e:
+        logger.exception(f"Error inesperado en búsqueda: {e}")
+    
+    return results
 
 
 def perform_osint(
@@ -84,18 +154,17 @@ def perform_osint(
     
     for q in queries:
         try:
-            items = ddg(q, max_results=max_results)
+            items = search_duckduckgo(q, max_results=max_results)
             if items:
                 for it in items:
                     results.append({
                         "query": q,
-                        "title": it.get("title"),
-                        "href": it.get("href"),
-                        "body": it.get("body")
+                        **it
                     })
         except Exception as e:
-            logger.exception("Error en ddg para query '%s': %s", q, e)
+            logger.exception(f"Error en búsqueda para query '{q}': {e}")
         
         time.sleep(delay)
     
     return results
+
