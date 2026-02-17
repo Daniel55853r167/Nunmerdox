@@ -53,13 +53,34 @@ pip install -e .
 
 ## Uso
 
-### Escaneo simple
+### 🎯 Modo Interactivo (Recomendado)
+
+El programa **se ejecuta en modo interactivo por defecto** si no das argumentos:
+
+```bash
+python -m nunmerdox scan
+```
+
+O explícitamente:
+
+```bash
+python -m nunmerdox scan --interactive
+```
+
+**El menú interactivo te guía paso a paso:**
+1. ➕ Añade números (uno por uno)
+2. ⚙️ Configura opciones (OSINT, máx resultados, delays, formato)
+3. ▶️ Inicia el escaneo
+
+### CLI Clásico (Si prefieres argumentos)
+
+Escaneo simple:
 
 ```bash
 python -m nunmerdox scan "+34123456789" --agree-ethics
 ```
 
-### Con búsquedas OSINT
+Con búsquedas OSINT:
 
 ```bash
 python -m nunmerdox scan "+34123456789" --agree-ethics --osint
@@ -90,11 +111,62 @@ python -m nunmerdox scan \
 
 ---
 
+## 🎨 Características del Modo Interactivo
+
+El modo interactivo ofrece una interfaz amigable con:
+
+✅ **Menús numerados** - Solo escribe el número de la opción
+✅ **Colores** - Interfaz visual y clara
+✅ **Validación** - No permite valores inválidos
+✅ **Confirmaciones** - Muestra lo que vas a hacer
+✅ **Sin memorizar**: No necesitas recordar flags o sintaxis
+
+**Ejemplo de sesión interactiva:**
+
+```
+============================================================
+NUNMERDOX - Scanner e OSINT de números telefónicos
+============================================================
+
+⚠️ ADVERTENCIA LEGAL ⚠️
+Este software es para pentesting, OSINT ético...
+
+--- Agregar Números ---
+Números ingresados: 0
+
+============================================================
+Gestión de números
+============================================================
+  1. Añadir un nuevo número
+  2. Limpiar lista
+  3. Continuar a opciones
+
+Selecciona opción: 1
+Ingresa número (ej: +34123456789 o 123456789): +34615234567
+✓ Número añadido
+
+--- Configurar Opciones ---
+============================================================
+Opciones de escaneo
+============================================================
+  1. OSINT: 🔴 DESACTIVADO
+  2. Máx resultados OSINT: 5
+  3. Delay entre queries: 1.0s
+  4. Formato salida: Consola (ninguno)
+  5. Comenzar escaneo
+
+Selecciona opción: 1
+✓ OSINT activado
+```
+
+---
+
 ## Opciones CLI
 
 | Opción | Descripción | Default |
 |--------|-------------|---------|
-| `--agree-ethics` | Confirma uso legal (obligatorio) | - |
+| `--interactive`, `-i` | Activar modo interactivo con menús | Auto (sí si sin args) |
+| `--agree-ethics` | Confirma uso legal (obligatorio en CLI) | - |
 | `--osint` | Activar búsquedas OSINT | False |
 | `--osint-max N` | Máx resultados por query | 5 |
 | `--osint-delay S` | Delay entre queries (seg) | 1.0 |
