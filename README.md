@@ -53,34 +53,50 @@ pip install -e .
 
 ## Uso
 
-### 🎯 Modo Interactivo (Recomendado)
+### ⚡ Modo Rápido (Por defecto)
 
-El programa **se ejecuta en modo interactivo por defecto** si no das argumentos:
+El programa **se ejecuta en modo rápido por defecto** - solo introduce tu número:
 
 ```bash
 python -m nunmerdox scan
 ```
 
-O explícitamente:
+**El flujo es:**
+1. Ejecutas el comando
+2. El programa pide: `Introduce el número: `
+3. Introduces tu número (+34123456789 o 123456789)
+4. ¡Automáticamente inicia búsqueda OSINT! 🔍
+
+**Ejemplo:**
+```bash
+$ python -m nunmerdox scan
+
+╔══════════════════════════════════════════════════════════╗
+║ NUNMERDOX - OSINT Scanner de Números Telefónicos        ║
+╚══════════════════════════════════════════════════════════╝
+
+Introduce el número (+34123456789 o 123456789): +34615234567
+
+Iniciando búsqueda OSINT...
+[escaneo en progreso...]
+```
+
+### 🎯 Modo Interactivo Avanzado
+
+Para menús completos con más opciones:
 
 ```bash
 python -m nunmerdox scan --interactive
 ```
 
-**El menú interactivo te guía paso a paso:**
-1. ➕ Añade números (uno por uno)
-2. ⚙️ Configura opciones (OSINT, máx resultados, delays, formato)
-3. ▶️ Inicia el escaneo
+Te permitirá:
+- ➕ Agregar múltiples números
+- ⚙️ Configurar OSINT (activar/desactivar, máx resultados, delays)
+- 💾 Elegir formato de salida (JSON, TXT, CSV)
 
-### CLI Clásico (Si prefieres argumentos)
+### CLI Clásico
 
-Escaneo simple:
-
-```bash
-python -m nunmerdox scan "+34123456789" --agree-ethics
-```
-
-Con búsquedas OSINT:
+Para usuarios avanzados con argumentos:
 
 ```bash
 python -m nunmerdox scan "+34123456789" --agree-ethics --osint
@@ -111,53 +127,21 @@ python -m nunmerdox scan \
 
 ---
 
-## 🎨 Características del Modo Interactivo
+## 🎨 Características
 
-El modo interactivo ofrece una interfaz amigable con:
+### Modo Rápido
+✅ **Sin configuración** - Introduce número y listo
+✅ **OSINT activado por defecto** - Búsquedas automáticas
+✅ **Salida en consola** - Resultados instantáneos
+✅ **Ideal para** - Uso rápido sin opciones
 
+### Modo Interactivo Avanzado
 ✅ **Menús numerados** - Solo escribe el número de la opción
-✅ **Colores** - Interfaz visual y clara
+✅ **Colores** - Interfaz visual clara
 ✅ **Validación** - No permite valores inválidos
-✅ **Confirmaciones** - Muestra lo que vas a hacer
-✅ **Sin memorizar**: No necesitas recordar flags o sintaxis
-
-**Ejemplo de sesión interactiva:**
-
-```
-============================================================
-NUNMERDOX - Scanner e OSINT de números telefónicos
-============================================================
-
-⚠️ ADVERTENCIA LEGAL ⚠️
-Este software es para pentesting, OSINT ético...
-
---- Agregar Números ---
-Números ingresados: 0
-
-============================================================
-Gestión de números
-============================================================
-  1. Añadir un nuevo número
-  2. Limpiar lista
-  3. Continuar a opciones
-
-Selecciona opción: 1
-Ingresa número (ej: +34123456789 o 123456789): +34615234567
-✓ Número añadido
-
---- Configurar Opciones ---
-============================================================
-Opciones de escaneo
-============================================================
-  1. OSINT: 🔴 DESACTIVADO
-  2. Máx resultados OSINT: 5
-  3. Delay entre queries: 1.0s
-  4. Formato salida: Consola (ninguno)
-  5. Comenzar escaneo
-
-Selecciona opción: 1
-✓ OSINT activado
-```
+✅ **Múltiples números** - Agregar varios de una vez
+✅ **Control total** - Personaliza cada opción
+✅ **Ideal para** - Análisis detallado y profesional
 
 ---
 
@@ -165,16 +149,36 @@ Selecciona opción: 1
 
 | Opción | Descripción | Default |
 |--------|-------------|---------|
-| `--interactive`, `-i` | Activar modo interactivo con menús | Auto (sí si sin args) |
-| `--agree-ethics` | Confirma uso legal (obligatorio en CLI) | - |
-| `--osint` | Activar búsquedas OSINT | False |
+| (sin args) | Modo rápido - solo introduce número | - |
+| `--interactive`, `-i` | Modo avanzado con menús completos | - |
+| `--agree-ethics` | Obligatorio para CLI clásico | - |
+| `--osint` | Activar búsquedas OSINT (CLI) | False |
 | `--osint-max N` | Máx resultados por query | 5 |
 | `--osint-delay S` | Delay entre queries (seg) | 1.0 |
 | `-o, --output FILE` | Archivo de salida | Consola |
 
 ---
 
-## Salida
+## 🚀 Uso Rápido (Primeros 30 segundos)
+
+**1. Instala:**
+```bash
+pip install -r requirements.txt
+```
+
+**2. Ejecuta:**
+```bash
+python -m nunmerdox scan
+```
+
+**3. Introduce tu número:**
+```
+Introduce el número (+34123456789 o 123456789): +34615234567
+```
+
+**¡Listo!** El OSINT se ejecuta automáticamente ✨
+
+---
 
 ### JSON (recomendado)
 

@@ -99,6 +99,29 @@ def print_menu(title: str, options: dict) -> int:
             print(f"{Colors.RED}Por favor ingresa un número.{Colors.ENDC}")
 
 
+def quick_mode():
+    """Modo rápido: solo pide número y lanza OSINT automáticamente."""
+    
+    print(f"\n{Colors.BOLD}{Colors.GREEN}╔{'═'*58}╗{Colors.ENDC}")
+    print(f"{Colors.BOLD}{Colors.GREEN}║ NUNMERDOX - OSINT Scanner de Números Telefónicos{Colors.ENDC}")
+    print(f"{Colors.BOLD}{Colors.GREEN}╚{'═'*58}╝{Colors.ENDC}\n")
+    
+    print(f"{Colors.YELLOW}⚠️  ADVERTENCIA LEGAL ⚠️{Colors.ENDC}")
+    print("Solo para pentesting, OSINT ético e investigación autorizada.\n")
+    
+    # Pedir número
+    while True:
+        num = input(f"{Colors.CYAN}Introduce el número (+34123456789 o 123456789): {Colors.ENDC}").strip()
+        if num:
+            break
+        else:
+            print(f"{Colors.RED}❌ Número no puede estar vacío{Colors.ENDC}")
+    
+    # Ejecutar OSINT con defaults
+    print(f"\n{Colors.BOLD}{Colors.CYAN}Iniciando búsqueda OSINT...{Colors.ENDC}\n")
+    run_scan([num], osint=True, osint_max=5, osint_delay=1.0, output=None)
+
+
 def interactive_mode():
     """Modo interactivo para ejecutar Nunmerdox sin argumentos CLI."""
     
@@ -376,11 +399,11 @@ def scan(
     interactive: bool = typer.Option(
         False,
         "--interactive", "-i",
-        help="Modo interactivo con menús"
+        help="Modo interactivo avanzado con menús completos"
     ),
 ):
     """
-    Escanea números telefónicos y opcionalmente ejecuta búsquedas OSINT.
+    Escanea números telefónicos y ejecuta búsquedas OSINT.
     
     **ADVERTENCIA LEGAL:**
     - Solo con consentimiento explícito para pentesting/OSINT ético
@@ -389,25 +412,33 @@ def scan(
     
     **Ejemplos:**
     
-    Modo interactivo (recomendado):
+    Modo rápido (solo introduce número):
+    ```
+    nunmerdox scan
+    ```
+    
+    Modo interactivo avanzado:
     ```
     nunmerdox scan --interactive
     ```
     
-    Escaneo rápido:
+    Escaneo por CLI:
     ```
     nunmerdox scan "+34123456789" --agree-ethics --osint
     ```
     """
     
-    # Si no hay números y no es interactivo, activar modo interactivo
+    # Sin argumentos: modo rápido
     if not numbers and not interactive:
-        interactive = True
+        quick_mode()
+        return
     
+    # Con --interactive: modo menús completo
     if interactive:
         interactive_mode()
         return
     
+    # Con argumentos: modo CLI clásico
     if not agree_ethics:
         typer.echo(
             "❌ Debes usar --agree-ethics para confirmar uso legal y autorizado",
