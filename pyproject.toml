@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nunmerdox"
+version = "1.0.0"
+description = "OSINT y scanner de números telefónicos"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+    {name = "Nunmerdox Contributors"}
+]
+dependencies = [
+    "phonenumbers>=8.13.0",
+    "duckduckgo_search>=3.9.0",
+    "typer[all]>=0.9.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "black>=22.0",
+    "flake8>=5.0",
+]
+
+[project.scripts]
+nunmerdox = "nunmerdox.cli:app"
+
+[tool.setuptools]
+packages = ["nunmerdox"]
+package-dir = {"" = "src"}
